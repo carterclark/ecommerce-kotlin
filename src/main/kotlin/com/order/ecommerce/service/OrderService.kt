@@ -26,10 +26,11 @@ class OrderService(
         val log: Logger = LoggerFactory.getLogger(OrderService::class.java)
     }
 
-    fun updateOrderStatus(orderId: String, orderStatus: String) {
+    fun updateOrderStatus(orderId: String, orderStatus: String): OrderCreateResponse {
         val order: Order = orderRepository.findById(orderId).orElseThrow()
         order.orderStatus = orderStatus
-        orderRepository.save(order)
+        val savedOrder = orderRepository.save(order)
+        return OrderCreateResponse(savedOrder.orderId, savedOrder.orderStatus)
     }
 
     fun findOrderById(orderId: String): Order {

@@ -14,6 +14,7 @@ import java.time.LocalDateTime
 class OrderUtil {
 
     companion object {
+        val mockOrderId = "2e99fe21-2243-4004-9640-e992bbcc5040"
 
         @JvmStatic
         fun createTestOrder(): OrderDto {
@@ -57,7 +58,7 @@ class OrderUtil {
 
             val dateTime = LocalDateTime.parse("2022-10-17T11:31:27.771692");
             return Order(
-                "2e99fe21-2243-4004-9640-e992bbcc5040",
+                mockOrderId,
                 "PROCESSING",
                 "2",
                 6.0,

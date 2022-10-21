@@ -26,7 +26,7 @@ class OrderController(val orderService: OrderService) {
     fun updateOrderStatus(
         @PathVariable("orderId") orderId: String,
         @RequestParam(name = "orderStatus") orderStatus: String
-    ) {
-        orderService.updateOrderStatus(orderId, orderStatus)
+    ): OrderCreateResponse {
+        return orderService.updateOrderStatus(orderId, orderStatus)
     }
 }

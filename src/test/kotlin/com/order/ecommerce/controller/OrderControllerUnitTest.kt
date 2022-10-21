@@ -4,6 +4,7 @@ import com.order.ecommerce.dto.OrderCreateResponse
 import com.order.ecommerce.dto.OrderDto
 import com.order.ecommerce.service.OrderService
 import com.order.ecommerce.util.OrderUtil
+import com.order.ecommerce.util.OrderUtil.Companion.mockOrderId
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -24,8 +25,10 @@ class OrderControllerUnitTest {
 
     private val orderDtoRequest: OrderDto = OrderUtil.createTestOrder()
     private val mockOrderCreateResponse: OrderCreateResponse =
-        OrderCreateResponse("2e99fe21-2243-4004-9640-e992bbcc5040", "PROCESSING")
+        OrderCreateResponse(mockOrderId, "PROCESSING")
     private val mockOrderGetResponse = OrderUtil.createMockOrderResponse()
+    private val mockOrderUpdateResponse: OrderCreateResponse =
+    OrderCreateResponse(mockOrderId, "PROCESSING")
 
 
     @Test
@@ -38,10 +41,19 @@ class OrderControllerUnitTest {
 
     @Test
     fun testGetOrder() {
-        Mockito.`when`(orderService.findOrderById("2e99fe21-2243-4004-9640-e992bbcc5040"))
+        Mockito.`when`(orderService.findOrderById(mockOrderId))
             .thenReturn(mockOrderGetResponse)
-        val actualResponse = orderController.findOrderById("2e99fe21-2243-4004-9640-e992bbcc5040")
+        val actualResponse = orderController.findOrderById(mockOrderId)
         assertThat(actualResponse).isEqualTo(mockOrderGetResponse)
+    }
+
+    @Test
+    fun testUpdateOrder(){
+        Mockito.`when`(orderService.updateOrderStatus(mockOrderId,"PROCESSING"))
+            .thenReturn(mockOrderUpdateResponse)
+        val actualResponse = orderController.updateOrderStatus(mockOrderId, "PROCESSING")
+
+        assertThat(actualResponse).isEqualTo(mockOrderUpdateResponse)
     }
 
 }
